@@ -1,0 +1,6 @@
+# Netlify redirects (copied into dist/ by the build).
+# Short URLs for the guide; /instruction itself picks the last-used language in the browser.
+/en             /instruction/en/   301
+/bn             /instruction/bn/   301
+/how-to-play    /instruction/en/   301
+/scores         /leaderboard/      301

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Sejuti" />
+    <meta name="description" content="Source & Sink Hunter — a divergence game for Vector Analysis, designed and developed by Sejuti." />
+    <title>Source &amp; Sink Hunter — by Sejuti</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="src/main.js"></script>
+  </head>
+  <body data-base="" data-page="play">
+    <div id="site-header"></div>
+
+    <main>
+      <!-- 1. Start screen -->
+      <section id="screen-start" class="screen">
+        <div class="card start hero">
+          <div class="start-text">
+            <span class="dev-badge"><span class="monogram small-mono" aria-hidden="true">S</span>A Vector Analysis game by <strong>Sejuti</strong></span>
+            <h1 data-text="appTitle"></h1>
+            <p id="start-greeting" class="greeting" hidden></p>
+            <h2 data-text="introHeading"></h2>
+            <p data-text="introText"></p>
+            <p class="formula">div&nbsp;<b>F</b> = ∂P/∂x + ∂Q/∂y</p>
+            <p data-text="introTask"></p>
+            <div class="start-actions">
+              <button id="btn-start" class="btn btn-primary btn-big" data-text="start"></button>
+              <a id="link-howto" class="btn btn-ghost btn-big" href="instruction/en/" data-text="howToPlay"></a>
+              <button id="btn-start-new" class="btn btn-danger-ghost" data-text="startFromNew" hidden></button>
+            </div>
+          </div>
+          <figure class="start-example">
+            <canvas id="example-canvas" aria-label="Example vector field of a source"></canvas>
+            <figcaption data-text="exampleCaption"></figcaption>
+          </figure>
+        </div>
+
+        <div class="card level-select-card">
+          <h2 data-text="chooseLevel"></h2>
+          <div id="level-select" class="level-select"></div>
+        </div>
+      </section>
+
+      <!-- 2. Level screen -->
+      <section id="screen-level" class="screen level" hidden>
+        <nav class="level-nav card" aria-label="Levels">
+          <button id="btn-prev-level" class="btn btn-ghost nav-arrow" aria-label="Previous level">‹</button>
+          <div id="level-chips" class="level-chips"></div>
+          <button id="btn-next-level" class="btn btn-ghost nav-arrow" aria-label="Next level">›</button>
+        </nav>
+
+        <div class="board card">
+          <div id="canvas-wrap" class="canvas-wrap">
+            <canvas id="field-canvas" tabindex="0" aria-label="Vector field. Click to place your tool."></canvas>
+          </div>
+          <p id="heat-legend" class="legend" hidden>
+            <span class="swatch swatch-pos"></span><span class="swatch swatch-neg"></span>
+            <span data-text="heatmapLegend"></span>
+          </p>
+        </div>
+
+        <aside class="panel card">
+          <div class="panel-head">
+            <span id="level-number" class="pill"></span>
+            <h2 id="level-title"></h2>
+            <p id="level-hint" class="hint"></p>
+          </div>
+
+          <div class="panel-block">
+            <h3 data-text="toolHeading"></h3>
+            <div class="tools" role="group">
+              <button id="tool-source" class="btn tool tool-source" aria-pressed="true">
+                <span class="tool-icon" aria-hidden="true">+</span><span data-text="toolSource"></span>
+              </button>
+              <button id="tool-sink" class="btn tool tool-sink" aria-pressed="false">
+                <span class="tool-icon" aria-hidden="true">−</span><span data-text="toolSink"></span>
+              </button>
+            </div>
+            <p class="small muted" data-text="toolShortcuts"></p>
+          </div>
+
+          <div class="panel-block stats">
+            <div>
+              <div class="stat-label" data-text="score"></div>
+              <div id="score" class="stat-value">0</div>
+            </div>
+            <div>
+              <div class="stat-label">Time</div>
+              <div id="timer" class="stat-value">0:00</div>
+            </div>
+            <div class="stat-wide" id="found"></div>
+            <div class="stat-wide muted small" id="level-best"></div>
+          </div>
+
+          <div class="panel-block">
+            <h3 data-text="lastClick"></h3>
+            <div id="last-click" class="last-click" aria-live="polite">
+              <p class="muted" data-text="noClickYet"></p>
+            </div>
+          </div>
+
+          <div class="panel-block actions">
+            <button id="btn-hint" class="btn btn-secondary" data-text="hintButton"></button>
+            <button id="btn-restart" class="btn btn-ghost" data-text="restart"></button>
+          </div>
+        </aside>
+
+        <!-- 3. Level complete (overlay over the level) -->
+        <div id="screen-complete" class="overlay" hidden>
+          <div class="card dialog" role="dialog" aria-modal="true" aria-labelledby="complete-heading">
+            <h2 id="complete-heading" data-text="levelComplete"></h2>
+            <p id="c-best" class="best-line"></p>
+            <table class="score-table">
+              <tr><td data-text="levelScore"></td><td id="c-score"></td></tr>
+              <tr><td id="c-bonus-label"></td><td id="c-bonus"></td></tr>
+              <tr class="total"><td data-text="levelTotal"></td><td id="c-total"></td></tr>
+            </table>
+            <h3 data-text="revealHeading"></h3>
+            <p id="c-formula" class="reveal"></p>
+            <div class="dialog-actions">
+              <button id="btn-replay" class="btn btn-ghost" data-text="replayLevel"></button>
+              <button id="btn-next" class="btn btn-primary btn-big"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Final screen -->
+      <section id="screen-final" class="screen card final" hidden>
+        <h1 id="final-heading"></h1>
+        <p id="final-player" class="muted"></p>
+        <p class="total-label" data-text="totalScore"></p>
+        <p id="final-total" class="total-value">0</p>
+        <table class="score-table breakdown">
+          <thead><tr><th data-text="breakdownLevel"></th><th data-text="breakdownScore"></th></tr></thead>
+          <tbody id="final-breakdown"></tbody>
+        </table>
+        <p class="muted" data-text="finalMessage"></p>
+        <div class="final-actions">
+          <button id="btn-again" class="btn btn-primary btn-big" data-text="playAgain"></button>
+          <a class="btn btn-ghost btn-big" href="leaderboard/" id="link-leaderboard" data-text="viewLeaderboard"></a>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <noscript>This game needs JavaScript and must be served from a local web server (see README).</noscript>
+  </body>
+</html>

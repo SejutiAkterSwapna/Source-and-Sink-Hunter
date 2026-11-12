@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>How to play — Source &amp; Sink Hunter</title>
+    <script>
+      // /instruction → /instruction/en/ (or the language chosen last time)
+      var l = 'en';
+      try { if (localStorage.getItem('ssh.lang') === 'bn') l = 'bn'; } catch (e) {}
+      location.replace((location.pathname.replace(/\/?$/, '/')) + l + '/');
+    </script>
+    <meta http-equiv="refresh" content="1; url=en/" />
+  </head>
+  <body><p><a href="en/">English</a> · <a href="bn/">বাংলা</a></p></body>
+</html>

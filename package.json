@@ -1,0 +1,23 @@
+{
+  "name": "source-sink-hunter",
+  "version": "1.0.0",
+  "description": "A browser game for learning divergence: find the hidden sources and sinks of a 2D vector field.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server -p 8080 -c-1 .",
+    "build": "node scripts/build.mjs",
+    "preview": "npm run build && npx http-server dist -p 8080 -c-1",
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "playwright test",
+    "test:dist": "npm run build && SERVE_DIR=dist playwright test",
+    "test:all": "npm test && npm run test:e2e"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "http-server": "^14.1.1"
+  }
+}

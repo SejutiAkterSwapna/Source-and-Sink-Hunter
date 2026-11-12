@@ -1,0 +1,11 @@
+# Netlify configuration for Source & Sink Hunter (by Sejuti).
+# The site is plain static files; the build just copies + checks them into dist/.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # The E2E test browser is not needed to deploy.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1"
